@@ -12,13 +12,13 @@ cloudinary.config({
 
 export const cloudinaryConfig = cloudinary;
 
-// export const uploadOnCloudinary = async (file) => {
-//     try {
-//         if(!file) return null;
-//         const response = await cloudinary.uploader.upload(file);
-//         return response;
-//     } catch (error) {
-//         console.log("error in uploadOnCloudinary",error.message);
-//         return null;
-//     }
-// }
+export const uploadOnCloudinary = async (file) => {
+    try {
+        if(!file) return null;
+        const response = await cloudinary.uploader.upload(file);
+        return response;
+    } catch (error) {
+        console.log("error in uploadOnCloudinary",error.message);
+        return null;
+    }
+}

@@ -1,5 +1,6 @@
 import Message from "../modules/message.model.js";
 import User from "../modules/user.model.js";
+import { uploadOnCloudinary } from "../lib/cloudnairy.js";
 
 export const getUsers = async (req, res) => {
     try {
@@ -33,35 +34,42 @@ export const getMessages = async (req, res) => {
 
 export const sendMessage = async (req, res) => {
     try {
-        const {message, image} = req.body;
-        const {id: receiverId} = req.params;
+        const { text, message, image: imageBase64 } = req.body;
+        const { id: receiverId } = req.params;
         const senderId = req.user._id;
 
-        if(image){
-            const upload = await uploadOnCloudinary(image);
-            if(!upload) return res.status(400).json({message: "Image upload failed"});
-            image = upload.secure_url;
+        // Use 'text' from frontend if 'message' is not provided
+        let content = message || text;
+        let imageUrl = "";
+
+        if (imageBase64) {
+            const upload = await uploadOnCloudinary(imageBase64);
+            if (!upload) return res.status(400).json({ message: "Image upload failed" });
+            imageUrl = upload.secure_url;
         }
 
         const user = await User.findById(receiverId);
+        if (!user) return res.status(404).json({ message: "User not found" });
 
-        if(!user) return res.status(404).json({message: "User not found"});
-        if(!message) return res.status(400).json({message: "Message is required"});
+        // Require at least text or an image
+        if (!content && !imageUrl) {
+            return res.status(400).json({ message: "Message text or image is required" });
+        }
 
         const newMessage = new Message({
             senderId,
             receiverId,
-            message,
-            image
+            message: content || "", // Still provide empty string if only image
+            image: imageUrl
         });
 
         await newMessage.save();
-        res.status(201).json(newMessage);   
+        res.status(201).json(newMessage);
 
-        //todo : realtime functinality goes here => socket.io 
+        //todo : realtime functionality goes here => socket.io 
 
     } catch (error) {
-        console.log("error in sendMessage",error.message);
-        res.status(500).json({message: "Internal server error"});
+        console.log("error in sendMessage", error.message);
+        res.status(500).json({ message: "Internal server error" });
     }
 }
