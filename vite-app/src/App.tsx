@@ -11,15 +11,23 @@ import { useLayoutStore } from './store/useLayoutStore'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ChatSection } from './components/ChatWindow'
 import { CreateGroup } from './components/CreateGroup'
+import { useCallStore } from './store/useCallStore'
 
 
 function App() {
-  const { user, isAuthChecking, checkAuthStatus, onlineUsers } = useAuthStore()
+  const { user, isAuthChecking, checkAuthStatus, onlineUsers, socket } = useAuthStore()
   const { isProfileOpen, isCallPannelOpen, isGroupCreationPopupOpen } = useLayoutStore()
+  const { initCallListeners } = useCallStore()
 
   useEffect(() => {
     checkAuthStatus()
   }, [checkAuthStatus])
+
+  useEffect(() => {
+    if (socket) {
+      initCallListeners()
+    }
+  }, [socket, initCallListeners])
 
   console.log("online users", onlineUsers);
 
@@ -53,7 +61,7 @@ function App() {
           <motion.main animate={{ width: isProfileOpen || isCallPannelOpen ? '50%' : '73%' }} >
             <ChatSection />
           </motion.main>
-          {isProfileOpen && (
+          {(isProfileOpen || isCallPannelOpen) && (
             <motion.div
               className='w-1/4'
               initial={{ x: "100%" }}
