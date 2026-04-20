@@ -1,6 +1,7 @@
 import express from "express";
 import authRoutes from "./rountes/auth.route.js";
 import messageRoutes from "./rountes/message.route.js";
+import groupRoutes from "./rountes/group.route.js";
 import dotenv from "dotenv";
 import { connectDB } from "./lib/db.js";
 import cookieParser from "cookie-parser";
@@ -21,6 +22,7 @@ app.use(cors({
 
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
+app.use("/api/groups", groupRoutes);
 
 server.listen(process.env.PORT, () => {
     console.log(`server is running on port ${process.env.PORT}`)
