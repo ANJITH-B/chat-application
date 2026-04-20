@@ -9,6 +9,7 @@ import cors from 'cors' ;
 import passport from "passport";
 import "./lib/passport.js";
 import { app , server } from "./lib/socket.js";
+import { initMediasoup } from "./lib/mediasoup.js";
 
 dotenv.config();
 
@@ -27,4 +28,9 @@ app.use("/api/groups", groupRoutes);
 server.listen(process.env.PORT, () => {
     console.log(`server is running on port ${process.env.PORT}`)
     connectDB();
+    initMediasoup().then(() => {
+        console.log('Mediasoup initialized');
+    }).catch(err => {
+        console.error('Mediasoup initialization failed:', err);
+    });
 })
