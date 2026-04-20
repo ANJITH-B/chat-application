@@ -1,18 +1,27 @@
 import { Routes, Route } from 'react-router-dom'
 import ChatList from './components/InboxPannel'
-import ChatWindow from './components/ui/chat-window'
 import Navigator from './layout/Navigator'
 import Auth from './components/auth/page'
-import { useAuthStore } from './store/useAuthStore' 
+import { useAuthStore } from './store/useAuthStore'
 import { useEffect } from 'react'
+import Profile from './components/Profile'
+import Toast from './components/ui/toast'
+import CallPannel from './components/CallPannel'
+import { useLayoutStore } from './store/useLayoutStore'
+import { AnimatePresence, motion } from 'framer-motion'
+import { ChatSection } from './components/ChatWindow'
+import { CreateGroup } from './components/CreateGroup'
 
 
 function App() {
-  const { user , isAuthChecking, checkAuthStatus } = useAuthStore()
+  const { user, isAuthChecking, checkAuthStatus, onlineUsers } = useAuthStore()
+  const { isProfileOpen, isCallPannelOpen, isGroupCreationPopupOpen } = useLayoutStore()
 
-  useEffect(()=>{
+  useEffect(() => {
     checkAuthStatus()
-  },[checkAuthStatus])
+  }, [checkAuthStatus])
+
+  console.log("online users", onlineUsers);
 
   if (isAuthChecking) {
     return (
@@ -25,20 +34,43 @@ function App() {
     )
   }
 
-  if (!user) return <Auth />
+  if (!user) return (
+    <>
+      <Auth />
+      <Toast />
+    </>
+  )
 
 
   return (
-    <>
-      <div className='flex bg-[#F0EFEB] container mx-auto'>
-        <Navigator />
-        <ChatList />
+    <div className='flex h-screen w-full'>
+      <Navigator />
+      <div className='flex h-screen w-[calc(100%-26px)]'>
+        <motion.aside className='w-1/4'>
+          <ChatList />
+        </motion.aside>
+        <AnimatePresence>
+          <motion.main animate={{ width: isProfileOpen || isCallPannelOpen ? '50%' : '73%' }} >
+            <ChatSection />
+          </motion.main>
+          {isProfileOpen && (
+            <motion.div
+              className='w-1/4'
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}>
+              {isProfileOpen && <Profile />}
+              {isCallPannelOpen && <CallPannel />}
+            </motion.div>
+          )}
+        </AnimatePresence>
         <Routes>
-          <Route path="/chat/:id" element={<ChatWindow />} />
-          {!user && <Route path='/auth' element={<Auth/>} />}
+          {!user && <Route path='/auth' element={<Auth />} />}
         </Routes>
       </div>
-    </>
+      <Toast />
+      {isGroupCreationPopupOpen && <CreateGroup />}
+    </div>
   )
 }
 

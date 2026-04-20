@@ -1,27 +1,18 @@
-import { AlertCircle, CheckCircle2, Info, XCircle } from 'lucide-react';
+import { Toaster } from 'react-hot-toast'
 
-type Props = {
-    message: string;
-    type: 'success' | 'error' | 'warning' | 'info';
-}
-
-const icons = {
-    success: <CheckCircle2 size={36} className='text-green-500' />,
-    error: <XCircle size={36} className='text-red-500' />,
-    warning: <AlertCircle size={36} className='text-yellow-500' />,
-    info: <Info size={36} className='text-blue-500' />
-}
-
-
-const toast = ({message, type}: Props) => {
+const Toast = () => {
   return (
-    <div className='absolute bottom-10 right-10'>
-        <div className="flex items-center gap-3">
-            {icons[type]}
-            <p className="text-black text-sm leading-relaxed font-medium">{message}</p>
-        </div>
-    </div>
+    <Toaster
+      toastOptions={{
+        className: '',
+        style: {
+          border: '1px solid #713200',
+          padding: '16px',
+          color: '#713200',
+        },
+      }}
+    />
   )
 }
 
-export default toast
+export default Toast
