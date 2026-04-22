@@ -118,7 +118,7 @@ export const googleAuth = passport.authenticate('google', { scope: ['profile', '
 
 export const googleAuthCallback = (req, res) => {
     generateToken(req.user._id, res);
-    res.redirect(process.env.CLIENT_URL || 'http://localhost:5173');
+    res.redirect(process.env.CLIENT_URL);
 }
 
 
@@ -126,5 +126,5 @@ export const githubAuth = passport.authenticate('github', { scope: ['profile', '
 
 export const githubAuthCallback = (req, res) => {
     generateToken(req.user._id, res);
-    res.redirect(process.env.CLIENT_URL || 'http://localhost:5173');
+    res.redirect(process.env.CLIENT_URL);
 }
