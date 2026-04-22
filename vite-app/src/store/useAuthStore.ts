@@ -22,6 +22,8 @@ interface AuthState {
     onlineUsers: string[];
 }
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export const useAuthStore = create<AuthState>((set, get) => ({
     user: null,
     isSignUp: false,
@@ -114,19 +116,19 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     },
 
     googleAuth: () => {
-        window.location.href = "http://localhost:5001/api/auth/google";
+        window.location.href = `${API_URL}/api/auth/google`;
         toast.success('Google authentication started');
     },
 
     githubAuth: () => {
-        window.location.href = "http://localhost:5001/api/auth/github";
+        window.location.href = `${API_URL}/api/auth/github`;
         toast.success('Github authentication started');
     },
 
     connectSocket: () => {
         const {user} = get()
         if(!user || get().socket?.connected) return;
-        const socket = io("http://localhost:5001", {
+        const socket = io(API_URL, {
             withCredentials: true,
             query: {
                 userId: user._id
