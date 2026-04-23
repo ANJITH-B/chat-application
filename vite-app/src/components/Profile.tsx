@@ -2,9 +2,8 @@ import { Camera, LogOutIcon } from 'lucide-react'
 import { useAuthStore } from '../store/useAuthStore'
 import Button from './ui/button'
 
-type Props = {}
 
-const Profile = (props: Props) => {
+const Profile = () => {
     const { user, isUpdatingProfile, updateProfile } = useAuthStore()
 
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {

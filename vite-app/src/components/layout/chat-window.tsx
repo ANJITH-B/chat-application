@@ -1,6 +1,6 @@
 
 
-const ChatWindow = ({ isLoading, isSelected, children }: { isLoading?: boolean, isSelected: boolean, children: React.ReactNode }) => {
+const ChatWindow = ({  isSelected, children }: { isLoading?: boolean, isSelected: boolean, children: React.ReactNode }) => {
 
     // if(isLoading) return <p>Loading...</p>
 

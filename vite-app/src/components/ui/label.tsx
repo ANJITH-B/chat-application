@@ -32,18 +32,6 @@ const labelVariants = tv({
     }
 })
 
-const ItemsVariants = tv({
-    base: 'flex items-center gap-3',
-    variants: {
-        type: {
-            success: 'text-green-500',
-            error: 'text-red-500',
-        }
-    },
-    defaultVariants: {
-        type: 'success'
-    }
-})
 
 const Label = ({ message, children, type, className }: Props) => {
     return (

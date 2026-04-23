@@ -1,10 +1,8 @@
 import { useState } from 'react'
-import { Profile as ProfileItem } from './ui/profile'
 import { useLayoutStore } from '../store/useLayoutStore'
 import { useChatStore } from '../store/useChatStore'
-import { useAuthStore } from '../store/useAuthStore'
 import Button from './ui/button'
-import { Camera, X } from 'lucide-react'
+import { Camera } from 'lucide-react'
 import { useEffect } from 'react'
 import Popup from './ui/popup'
 
@@ -22,14 +20,14 @@ export const CreateGroup = () => {
 
 
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        // const file = e.target.files?.[0];
-        // if (file) {
-        //   const reader = new FileReader();
-        //   reader.onloadend = () => {
-        //     setGroupImage(reader.result as string);
-        //   };
-        //   reader.readAsDataURL(file);
-        // }
+        const file = e.target.files?.[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            setGroupImage(reader.result as string);
+          };
+          reader.readAsDataURL(file);
+        }
     };
 
     const handleCreate = async (e: React.FormEvent) => {

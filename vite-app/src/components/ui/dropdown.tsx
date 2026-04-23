@@ -1,15 +1,12 @@
 import { LogOutIcon, UserIcon } from 'lucide-react'
 import Button from './button'
 import { useAuthStore } from '../../store/useAuthStore'
-import { useNavigate } from 'react-router-dom'
 import { useLayoutStore } from '../../store/useLayoutStore'
 
-type Props = {}
 
-const Dropdown = (props: Props) => {
+const Dropdown = () => {
     const { logout } = useAuthStore();
     const { setIsProfileOpen } = useLayoutStore();
-    const navigator = useNavigate();
 
     return (
         <div className='w-40 h-fit absolute bg-white rounded-md shadow-lg z-10'>

@@ -1,11 +1,11 @@
-import { Layers, LogOutIcon, MessageSquareText } from "lucide-react";
+import { Layers, MessageSquareText } from "lucide-react";
 import Button from "../components/ui/button";
 import { useAuthStore } from "../store/useAuthStore";
 import { useState } from "react";
 import Dropdown from "../components/ui/dropdown";
 
 const Navigator = () => {
-    const { logout, user } = useAuthStore()
+    const { user } = useAuthStore()
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 

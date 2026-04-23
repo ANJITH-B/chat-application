@@ -10,9 +10,8 @@ import { useLayoutStore } from '../store/useLayoutStore'
 import { useCallStore } from '../store/useCallStore'
 import { useGroupCallStore } from '../store/useGroupCallStore'
 
-type Props = {}
 
-export const ChatSection = (props: Props) => {
+export const ChatSection = () => {
     const { onlineUsers } = useAuthStore()
     const { selectedChat } = useChatStore()
     const { setIsCallPannelOpen } = useLayoutStore()

@@ -1,17 +1,17 @@
 import { useState } from "react"
-import { Mail, Lock, User, LogIn as LoginIcon, UserPlus, Ghost, Eye, EyeOff } from 'lucide-react'
+import { User, Eye } from 'lucide-react'
 
 
-const icons = {
-  email: <Mail size={18} />,
-  password: <Lock size={18} />,
-  text: <User size={18} />,
-  LoginIcon: <LoginIcon size={18} />,
-  UserPlus: <UserPlus size={18} />,
-  Ghost: <Ghost size={18} />,
-  Eye: <Eye size={18} />,
-  EyeOff: <EyeOff size={18} />,
-};
+// const icons = {
+//   email: <Mail size={18} />,
+//   password: <Lock size={18} />,
+//   text: <User size={18} />,
+//   LoginIcon: <LoginIcon size={18} />,
+//   UserPlus: <UserPlus size={18} />,
+//   Ghost: <Ghost size={18} />,
+//   Eye: <Eye size={18} />,
+//   EyeOff: <EyeOff size={18} />,
+// };
 
 
 

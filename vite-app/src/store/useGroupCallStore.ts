@@ -155,7 +155,7 @@ export const useGroupCallStore = create<GroupCallState>((set, get) => ({
         });
     },
 
-    produceMedia: async (groupId, type) => {
+    produceMedia: async ( type) => { // groupId is missing
         const { sendTransport, producers } = get();
         if (!sendTransport) return;
 
