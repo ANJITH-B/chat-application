@@ -5,7 +5,7 @@ WORKDIR /app
 COPY vite-app/package*.json ./
 RUN npm install
 
-COPY frontend .
+COPY vite-app .
 RUN npm run build
 
 FROM nginx:alpine
