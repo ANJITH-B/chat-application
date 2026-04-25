@@ -51,7 +51,7 @@ const Auth = () => {
 
                     {showConfirmPassword && <Input placeholder='Confirm password' type='password' value={formData.confirmPassword} onChange={(e) => handleChange("confirmPassword", e.target.value)} />}
 
-                    {isLogin && <Button className='w-full' variant='link' onClick={() => setTab("ResetPassword")}> forgot Password</Button>}
+                    {/* {isLogin && <Button className='w-full' variant='link' onClick={() => setTab("ResetPassword")}> forgot Password</Button>} */}
 
 
                     {info && (
@@ -72,13 +72,13 @@ const Auth = () => {
                 <Button icon='Github' variant='social' onClick={githubAuth}> Github </Button>
             </Popup.Section>
 
-            {isSignUp && (
+            {/* {isSignUp && (
                 <Popup.Section >
                     <Label message='Guest mode allows you to explore the application without creating an account. Some features may be restricted.' type='info'>
                         <Button icon='Guest'>Continue as Guest</Button>
                     </Label>
                 </Popup.Section>
-            )}
+            )} */}
 
             <Popup.Section className='py-5'>
                 <p className="text-slate-500 text-sm flex gap-2 items-center">
