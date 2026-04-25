@@ -15,7 +15,7 @@ const Auth = () => {
     const [formData, setFormData] = useState<FormDataType>(initialFormData);
 
     const isSignUp = useMemo(() => tab === "SignUp", [tab]);
-    const isLogin = useMemo(() => tab === "LogIn", [tab]);
+    // const isLogin = useMemo(() => tab === "LogIn", [tab]);
     const showConfirmPassword = useMemo(
         () => tab === "SignUp" || tab === "ResetPassword",
         [tab]
