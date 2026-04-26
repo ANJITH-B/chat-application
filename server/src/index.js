@@ -26,11 +26,11 @@ app.use("/api/messages", messageRoutes);
 app.use("/api/groups", groupRoutes);
 
 server.listen(process.env.PORT, () => {
-    console.log(`server is running on port ${process.env.PORT}`)
+    // console.log(`server is running on port ${process.env.PORT}`)
     connectDB();
     initMediasoup().then(() => {
-        console.log('Mediasoup initialized');
+        // console.log('Mediasoup initialized');
     }).catch(err => {
-        console.error('Mediasoup initialization failed:', err);
+        // console.error('Mediasoup initialization failed:', err);
     });
 })
