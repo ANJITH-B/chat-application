@@ -10,10 +10,23 @@ import { getWorker, createTransport, getRouterConfig } from "./mediasoup.js";
 // Memory storage for group call state
 const rooms = {}; // { groupId: { router, participants: { userId: { transports: Map, producers: Map, consumers: Map } } } }
 
+const allowedSocketOrigins = [
+    process.env.CLIENT_URL,
+    ...(process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',').map((origin) => origin.trim()).filter(Boolean) : []),
+    ...(process.env.LOCAL_ALLOWED_ORIGIN ? [process.env.LOCAL_ALLOWED_ORIGIN.trim()].filter(Boolean) : [])
+].filter(Boolean);
+
 const io = new Server(server, {
     cors: {
-        origin: [process.env.CLIENT_URL],
-        methods: ["GET", "POST"],
+        origin: (origin, callback) => {
+            if (!origin || allowedSocketOrigins.includes(origin)) {
+                callback(null, true);
+                return;
+            }
+
+            callback(new Error('Not allowed by Socket.io CORS'));
+        },
+        methods: ['GET', 'POST'],
         credentials: true
     }
 });

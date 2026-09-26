@@ -20,8 +20,12 @@ const ChatList = () => {
     getGroups()
   }, [getUsers, getGroups])
 
-  const filteredUsers = users.filter((user: any) => user.username.toLowerCase().includes(searchTerm.toLowerCase()));
-  const filteredGroups = groups.filter((group: any) => group.name.toLowerCase().includes(searchTerm.toLowerCase()));
+  const safeUsers = Array.isArray(users) ? users.filter(Boolean) : [];
+  const safeGroups = Array.isArray(groups) ? groups.filter(Boolean) : [];
+  const search = (searchTerm ?? '').toLowerCase();
+
+  const filteredUsers = safeUsers.filter((user: any) => String(user?.username ?? '').toLowerCase().includes(search));
+  const filteredGroups = safeGroups.filter((group: any) => String(group?.name ?? '').toLowerCase().includes(search));
 
   if (isUserLoading || isGroupLoading) return <p>Loading...</p>
 
@@ -36,7 +40,7 @@ const ChatList = () => {
         </InboxPannel.Section>
       )}
       {filteredUsers.length > 0 && (
-        <InboxPannel.Section title={ isGroupCreationOpen ? "Select Members" : "Personal Chats"} button={{ onClick: () => { }, label: 'show more' }}>
+        <InboxPannel.Section title={isGroupCreationOpen ? "Select Members" : "Personal Chats"} button={{ onClick: () => { }, label: 'show more' }}>
           {filteredUsers.map((user: any) => (
             <Profile
               toggle={isGroupCreationOpen}
@@ -44,26 +48,26 @@ const ChatList = () => {
               isOnline={onlineUsers.includes(user._id)}
               onClick={() => { isGroupCreationOpen ? toggleMember(user._id) : setSelectedChat(user) }}
               key={user._id}
-              image={user.profilePic}
-              name={user.username}
-              description={user.lastMessage || "No messages yet"}
-              unreadMessages={user.unreadCount}
+              image={user?.profilePic || "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png"}
+              name={user?.username ?? 'Unknown user'}
+              description={user?.lastMessage || "No messages yet"}
+              unreadMessages={user?.unreadCount}
             />
           ))}
         </InboxPannel.Section>
       )}
-      {(groups.length === 0 || filteredGroups.length > 0) && !isGroupCreationOpen && (
+      {(safeGroups.length === 0 || filteredGroups.length > 0) && !isGroupCreationOpen && (
         <InboxPannel.Section title="Groups" button={{ onClick: () => setIsGroupCreationOpen(true), label: 'create group' }} >
-          {groups.length > 0 ?
+          {safeGroups.length > 0 ?
             <>
               {filteredGroups.map((group: any) => (
                 <Profile
                   isSelected={!!(selectedChat && selectedChat._id === group._id && 'isGroup' in selectedChat && selectedChat.isGroup)}
                   onClick={() => setSelectedChat(group)}
                   key={group._id}
-                  image={group.image || '/logo.svg'}
-                  name={group.name}
-                  description={group.lastMessage || "No messages yet"}
+                  image={group?.image || '/logo.svg'}
+                  name={group?.name ?? 'Untitled group'}
+                  description={group?.lastMessage || "No messages yet"}
                 />
               ))}
             </> : <Welcome message="You are not in any groups yet" button={{ onClick: () => setIsGroupCreationOpen(true), label: 'create group' }} />}
