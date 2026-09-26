@@ -1,6 +1,8 @@
 # Dockerfile.backend
 FROM node:22
 
+RUN apt-get update && apt-get install -y python3-pip build-essential
+
 WORKDIR /app
 COPY server/package*.json ./
 RUN npm install
