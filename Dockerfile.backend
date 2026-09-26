@@ -5,6 +5,10 @@ RUN apt-get update && apt-get install -y python3-pip build-essential
 
 WORKDIR /app
 COPY server/package*.json ./
+
+# Limit mediasoup compilation to 1 core to prevent 8GB OOM crash
+ENV MEDIASOUP_MAX_CORES=1
+
 RUN npm install
 
 COPY server .
